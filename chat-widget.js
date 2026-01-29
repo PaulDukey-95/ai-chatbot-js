@@ -181,7 +181,7 @@
         .n8n-chat-widget .chat-input {
             padding: 16px;
             background: var(--chat--color-background);
-            border-top: 1px solid #a9b89b65;
+            border-top: 1px solid #26465370;
             display: flex;
             gap: 8px;
         }
@@ -209,7 +209,7 @@
             color: #353535;
             border: none;
             border-radius: none;
-            padding: 0 20px;
+            padding: 0 10px;
             cursor: pointer;
             transition: transform 0.2s;
             font-family: inherit;
@@ -255,10 +255,9 @@
         }
 
         .n8n-chat-widget .chat-footer {
-            padding: 8px;
+            padding: 4px 8px;
             text-align: center;
             background: var(--chat--color-background);
-            border-top: 1px solid #a9b89b65;
         }
 
         .n8n-chat-widget .chat-footer a {
@@ -368,7 +367,7 @@
                 <textarea placeholder="Type your message here..." rows="1"></textarea>
                 <button type="submit" class="send-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M22.83,0c.74.18,1.23.79,1.17,1.57l-6.9,21.51c-.48,1.12-1.9,1.26-2.55.22l-2.88-8.56,5.39-7.8-7.81,5.38L.64,9.41c-.34-.23-.52-.54-.64-.93v-.52c.16-.5.43-.86.93-1.07L22.31,0h.52Z"/></svg>
+                        <path fill="#A9B89E" d="M22.83,0c.74.18,1.23.79,1.17,1.57l-6.9,21.51c-.48,1.12-1.9,1.26-2.55.22l-2.88-8.56,5.39-7.8-7.81,5.38L.64,9.41c-.34-.23-.52-.54-.64-.93v-.52c.16-.5.43-.86.93-1.07L22.31,0h.52Z"/></svg>
                 </button>
 
             </div>
