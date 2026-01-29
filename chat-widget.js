@@ -73,9 +73,15 @@
             height: 32px;
         }
 
-        .n8n-chat-widget .brand-header span {
+        .n8n-chat-widget .brand-header p {
             font-size: 18px;
             font-weight: 500;
+            color: #ffffff;
+        }
+
+        .n8n-chat-widget .brand-header span {
+            font-size: 12px;
+            font-weight: 300;
             color: #ffffff;
         }
 
@@ -342,7 +348,7 @@
             <img src="${config.branding.logo}" alt="${config.branding.name}">
                     <div class="">
                         <p>${config.branding.name}</p>
-                        <p>${config.branding.subtitle}</p>
+                        <span>${config.branding.subtitle}</span>
                     </div>
             <button class="close-button">×</button>
         </div>
@@ -364,7 +370,7 @@
                 <img src="${config.branding.logo}" alt="${config.branding.name}">
                     <div class="">
                         <p>${config.branding.name}</p>
-                        <p>${config.branding.subtitle}</p>
+                        <span>${config.branding.subtitle}</span>
                     </div>
                 <button class="close-button">×</button>
             </div>
