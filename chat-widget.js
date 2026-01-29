@@ -181,7 +181,7 @@
         .n8n-chat-widget .chat-input {
             padding: 16px;
             background: var(--chat--color-background);
-            border-top: 1px solid #26465370;
+            border-top: 1.5px solid #26465312;
             display: flex;
             gap: 8px;
         }
@@ -255,7 +255,7 @@
         }
 
         .n8n-chat-widget .chat-footer {
-            padding: 4px 8px;
+            padding: 8px;
             text-align: center;
             background: var(--chat--color-background);
         }
@@ -264,7 +264,7 @@
             color: var(--chat--color-primary);
             text-decoration: none;
             font-size: 12px;
-            opacity: 0.8;
+            opacity: 0.5;
             transition: opacity 0.2s;
             font-family: inherit;
         }
@@ -341,6 +341,7 @@
         <div class="brand-header">
             <img src="${config.branding.logo}" alt="${config.branding.name}">
             <span>${config.branding.name}</span>
+            <span>${config.branding.subtitle}</span>
             <button class="close-button">×</button>
         </div>
         <div class="new-conversation">
@@ -360,6 +361,7 @@
             <div class="brand-header">
                 <img src="${config.branding.logo}" alt="${config.branding.name}">
                 <span>${config.branding.name}</span>
+                <span>${config.branding.subtitle}</span>
                 <button class="close-button">×</button>
             </div>
             <div class="chat-messages"></div>
