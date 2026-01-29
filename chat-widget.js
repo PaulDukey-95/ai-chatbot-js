@@ -39,7 +39,7 @@
         .n8n-chat-widget .brand-header {
             padding: 2rem;
             display: flex;
-            background: #264653;
+            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             align-items: center;
             gap: 0.75rem;
             border-bottom: 1px solid #353535;
@@ -164,18 +164,18 @@
 
         .n8n-chat-widget .chat-message.user {
             background: #F0EDE3;
-            color: white;
+            color: var(--n8n-chat-font-color);
             align-self: flex-end;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0px 6px rgba(0, 0, 0, 0.05);
             border: none;
         }
 
         .n8n-chat-widget .chat-message.bot {
             background: var(--chat--color-background);
-            border: 1px solid #A9B89B;
+            border: none;
+            box-shadow: 0 0 6px rgba(73, 73, 73, 0.2);
             color: var(--chat--color-font);
             align-self: flex-start;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .n8n-chat-widget .chat-input {
@@ -189,7 +189,8 @@
         .n8n-chat-widget .chat-input textarea {
             flex: 1;
             padding: 12px;
-            box-shadow: 0 4px 12px rgba(73, 73, 73, 0.06);
+            border: none;
+            box-shadow: 0 0 6px rgba(73, 73, 73, 0.2);
             border-radius: 8px;
             background: var(--chat--color-background);
             color: var(--chat--color-font);
@@ -204,8 +205,8 @@
         }
 
         .n8n-chat-widget .chat-input button {
-            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
-            color: white;
+            background: #ebebeb;
+            color: #353535;
             border: none;
             border-radius: 8px;
             padding: 0 20px;
