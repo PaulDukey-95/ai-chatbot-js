@@ -37,9 +37,12 @@
         }
 
         .n8n-chat-widget .brand-header {
-            padding: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
             display: flex;
-            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
+            background: var(--chat--color-primary);
             align-items: center;
             gap: 0.75rem;
             border-bottom: 1px solid #353535;
@@ -205,7 +208,7 @@
         }
 
         .n8n-chat-widget .chat-input button {
-            background: #ebebeb;
+            background: #A9B89E;
             color: #353535;
             border: none;
             border-radius: 8px;
