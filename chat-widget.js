@@ -7,7 +7,7 @@
             --chat--color-secondary: var(--n8n-chat-secondary-color, #4A90E2);
             --chat--color-background: var(--n8n-chat-background-color, #ffffff);
             --chat--color-font: var(--n8n-chat-font-color, #353535);
-            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: inherit;
         }
 
         .n8n-chat-widget .chat-container {
@@ -20,8 +20,8 @@
             height: 600px;
             background: var(--chat--color-background);
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(133, 79, 255, 0.15);
-            border: 1px solid rgba(133, 79, 255, 0.2);
+            box-shadow: 0 8px 32px #353535;
+            border: 1px solid #A9B89B;
             overflow: hidden;
             font-family: inherit;
         }
@@ -37,11 +37,12 @@
         }
 
         .n8n-chat-widget .brand-header {
-            padding: 16px;
+            padding: 2rem;
             display: flex;
+            background: #264653;
             align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid rgba(133, 79, 255, 0.1);
+            gap: 0.75rem;
+            border-bottom: 1px solid #353535;
             position: relative;
         }
 
@@ -75,7 +76,7 @@
         .n8n-chat-widget .brand-header span {
             font-size: 18px;
             font-weight: 500;
-            color: var(--chat--color-font);
+            color: #ffffff;
         }
 
         .n8n-chat-widget .new-conversation {
@@ -165,13 +166,13 @@
             background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             color: white;
             align-self: flex-end;
-            box-shadow: 0 4px 12px rgba(133, 79, 255, 0.2);
+            box-shadow: 0 4px 12px #A9B89B;
             border: none;
         }
 
         .n8n-chat-widget .chat-message.bot {
             background: var(--chat--color-background);
-            border: 1px solid rgba(133, 79, 255, 0.2);
+            border: 1px solid #A9B89B;
             color: var(--chat--color-font);
             align-self: flex-start;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -180,7 +181,7 @@
         .n8n-chat-widget .chat-input {
             padding: 16px;
             background: var(--chat--color-background);
-            border-top: 1px solid rgba(133, 79, 255, 0.1);
+            border-top: 1px solid #A9B89B;
             display: flex;
             gap: 8px;
         }
@@ -188,7 +189,7 @@
         .n8n-chat-widget .chat-input textarea {
             flex: 1;
             padding: 12px;
-            border: 1px solid rgba(133, 79, 255, 0.2);
+            border: 1px solid #A9B89B;
             border-radius: 8px;
             background: var(--chat--color-background);
             color: var(--chat--color-font);
@@ -229,7 +230,7 @@
             color: white;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(133, 79, 255, 0.3);
+            box-shadow: 0 4px 12px #A9B89B;
             z-index: 999;
             transition: transform 0.3s;
             display: flex;
@@ -256,7 +257,7 @@
             padding: 8px;
             text-align: center;
             background: var(--chat--color-background);
-            border-top: 1px solid rgba(133, 79, 255, 0.1);
+            border-top: 1px solid #A9B89B;
         }
 
         .n8n-chat-widget .chat-footer a {
