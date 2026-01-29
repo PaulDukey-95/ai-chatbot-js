@@ -69,8 +69,8 @@
         }
 
         .n8n-chat-widget .brand-header img {
-            width: 32px;
-            height: 32px;
+            width: 48px;
+            height: 48px;
         }
 
         .n8n-chat-widget .brand-header p {
@@ -80,10 +80,16 @@
         }
 
         .n8n-chat-widget .brand-header span {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 300;
             color: #ffffff;
         }
+
+        n8n-chat-widget .brand-header-text {
+            display: flex;
+            padding: 4px;
+        }
+
 
         .n8n-chat-widget .new-conversation {
             position: absolute;
@@ -346,7 +352,7 @@
     const newConversationHTML = `
         <div class="brand-header">
             <img src="${config.branding.logo}" alt="${config.branding.name}">
-                    <div class="">
+                    <div class="brand-header-text">
                         <p>${config.branding.name}</p>
                         <span>${config.branding.subtitle}</span>
                     </div>
@@ -368,7 +374,7 @@
         <div class="chat-interface">
             <div class="brand-header">
                 <img src="${config.branding.logo}" alt="${config.branding.name}">
-                    <div class="">
+                    <div class="brand-header-text">
                         <p>${config.branding.name}</p>
                         <span>${config.branding.subtitle}</span>
                     </div>
