@@ -48,19 +48,19 @@
 
         .n8n-chat-widget .close-button {
             position: absolute;
-            right: 16px;
+            right: 1rem;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: var(--chat--color-font);
+            color: #F0EDE3;
             cursor: pointer;
             padding: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: color 0.2s;
-            font-size: 20px;
+            font-size: 2rem;
             opacity: 0.6;
         }
 
@@ -163,10 +163,10 @@
         }
 
         .n8n-chat-widget .chat-message.user {
-            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
+            background: #F0EDE3;
             color: white;
             align-self: flex-end;
-            box-shadow: 0 4px 12px #A9B89B;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border: none;
         }
 
@@ -181,7 +181,7 @@
         .n8n-chat-widget .chat-input {
             padding: 16px;
             background: var(--chat--color-background);
-            border-top: 1px solid #A9B89B;
+            border-top: 1px solid #a9b89b65;
             display: flex;
             gap: 8px;
         }
@@ -189,7 +189,7 @@
         .n8n-chat-widget .chat-input textarea {
             flex: 1;
             padding: 12px;
-            border: 1px solid #A9B89B;
+            box-shadow: 0 4px 12px rgba(73, 73, 73, 0.06);
             border-radius: 8px;
             background: var(--chat--color-background);
             color: var(--chat--color-font);
@@ -230,7 +230,7 @@
             color: white;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 12px #A9B89B;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             z-index: 999;
             transition: transform 0.3s;
             display: flex;
@@ -257,7 +257,7 @@
             padding: 8px;
             text-align: center;
             background: var(--chat--color-background);
-            border-top: 1px solid #A9B89B;
+            border-top: 1px solid #a9b89b65;
         }
 
         .n8n-chat-widget .chat-footer a {
