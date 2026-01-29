@@ -340,8 +340,10 @@
     const newConversationHTML = `
         <div class="brand-header">
             <img src="${config.branding.logo}" alt="${config.branding.name}">
-            <span>${config.branding.name}</span>
-            <span>${config.branding.subtitle}</span>
+                    <div class="">
+                        <p>${config.branding.name}</p>
+                        <p>${config.branding.subtitle}</p>
+                    </div>
             <button class="close-button">×</button>
         </div>
         <div class="new-conversation">
@@ -360,8 +362,10 @@
         <div class="chat-interface">
             <div class="brand-header">
                 <img src="${config.branding.logo}" alt="${config.branding.name}">
-                <span>${config.branding.name}</span>
-                <span>${config.branding.subtitle}</span>
+                    <div class="">
+                        <p>${config.branding.name}</p>
+                        <p>${config.branding.subtitle}</p>
+                    </div>
                 <button class="close-button">×</button>
             </div>
             <div class="chat-messages"></div>
