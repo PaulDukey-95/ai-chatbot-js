@@ -366,11 +366,10 @@
             <div class="chat-messages"></div>
             <div class="chat-input">
                 <textarea placeholder="Type your message here..." rows="1"></textarea>
-                <button type="submit">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="send-icon">
-        <path fill="currentColor" d="M513.4-.3c16.7,4,27.8,17.7,26.2,35.2l-155.1,483.9c-10.8,25.3-42.8,28.5-57.3,5l-64.7-192.5,121.2-175.5-175.7,121L14.3,211.5c-7.6-5.1-11.8-12.3-14.4-20.9v-11.6c3.7-11.3,9.7-19.3,20.8-24L501.8-.3h11.6Z"/>
-    </svg>
-</button>
+                <button type="submit" class="send-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M22.83,0c.74.18,1.23.79,1.17,1.57l-6.9,21.51c-.48,1.12-1.9,1.26-2.55.22l-2.88-8.56,5.39-7.8-7.81,5.38L.64,9.41c-.34-.23-.52-.54-.64-.93v-.52c.16-.5.43-.86.93-1.07L22.31,0h.52Z"/></svg>
+                </button>
 
             </div>
             <div class="chat-footer">
