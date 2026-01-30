@@ -232,38 +232,120 @@
             transform: scale(1.05);
         }
 
-        .n8n-chat-widget .chat-toggle {
+        .n8n-chat-widget .chat-toggle-wrapper {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            right: 0; /* flush to edge */
             z-index: 999;
-            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            pointer-events: auto;
+
+            /* animation */
+            transform: translateX(120%);
+            opacity: 0;
+            animation: toggle-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .n8n-chat-widget .chat-toggle-wrapper.position-left {
+            right: auto;
+            left: 0;
+            align-items: flex-start;
+            transform: translateX(-120%);
+            animation: toggle-enter-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Square card */
+        .n8n-chat-widget .chat-toggle-card {
+            width: 150px;
+            height: 120px;
+            background: white;
+            border-radius: 14px 0 0 14px; /* flush right edge */
+            box-shadow: 0 10px 28px rgba(0,0,0,0.14);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding-top: 26px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+
+            transform: translateX(80%);
+            opacity: 0;
+            animation: card-enter 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.05s;
+        }
+
+        .n8n-chat-widget .chat-toggle-card img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        /* Circle */
+        .n8n-chat-widget .chat-toggle-circle {
+            position: absolute;
+            top: -28px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
+            border: none;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+            cursor: pointer;
+
+            transform: translateX(100%);
+            opacity: 0;
+            animation: circle-enter 0.55s cubic-bezier(0.22, 1.2, 0.36, 1) forwards;
+            animation-delay: 0.18s;
         }
 
-        .n8n-chat-widget .chat-toggle.position-left {
-            right: auto;
-            left: 20px;
+        .n8n-chat-widget .chat-toggle-circle:hover {
+            transform: scale(1.06);
         }
 
-        .n8n-chat-widget .chat-toggle:hover {
-            transform: scale(1.05);
-        }
-
-        .n8n-chat-widget .chat-toggle svg {
-            width: 24px;
-            height: 24px;
+        .n8n-chat-widget .chat-toggle-circle svg {
+            width: 22px;
+            height: 22px;
             fill: currentColor;
+        }
+
+        /* Keyframes */
+        @keyframes toggle-enter {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes toggle-enter-left {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes card-enter {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes circle-enter {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .n8n-chat-widget .chat-footer {
@@ -519,15 +601,25 @@ function parseAndFormatMessage(text) {
     
     chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
     
-    const toggleButton = document.createElement('button');
-    toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
-    toggleButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.476 0-2.886-.313-4.156-.878l-3.156.586.586-3.156A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
-        </svg>`;
+const toggleWrapper = document.createElement('div');
+toggleWrapper.className = `chat-toggle-wrapper${config.style.position === 'left' ? ' position-left' : ''}`;
+
+toggleWrapper.innerHTML = `
+  <div class="chat-toggle-card">
+    <img src="https://your-image-url.com/image.png" alt="Preview" />
+    <span>Chat with us</span>
+  </div>
+
+  <button class="chat-toggle-circle">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.476 0-2.886-.313-4.156-.878l-3.156.586.586-3.156A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+    </svg>
+  </button>
+`;
+
     
     widgetContainer.appendChild(chatContainer);
-    widgetContainer.appendChild(toggleButton);
+    widgetContainer.appendChild(toggleWrapper);
     document.body.appendChild(widgetContainer);
 
     const newChatBtn = chatContainer.querySelector('.new-chat-btn');
@@ -638,7 +730,7 @@ function parseAndFormatMessage(text) {
         }
     });
     
-    toggleButton.addEventListener('click', () => {
+    toggleWrapper.addEventListener('click', () => {
         chatContainer.classList.toggle('open');
     });
 
