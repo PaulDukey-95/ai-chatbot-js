@@ -80,7 +80,7 @@
         }
 
         .n8n-chat-widget .brand-header span {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 300;
             color: #ffffff;
         }
