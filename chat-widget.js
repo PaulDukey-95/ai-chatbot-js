@@ -259,19 +259,19 @@
         /* Square card */
         .n8n-chat-widget .chat-toggle-card {
             width: 150px;
-            height: 120px;
-            background: white;
+            height: 100px;
+            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             border-radius: 14px 0 0 14px; /* flush right edge */
             box-shadow: 0 10px 28px rgba(0,0,0,0.14);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 2px;
             padding-top: 26px;
             font-size: 13px;
             font-weight: 500;
-            color: #333;
+            color: #fff;
             cursor: pointer;
 
             transform: translateX(80%);
@@ -281,7 +281,7 @@
         }
 
         .n8n-chat-widget .chat-toggle-card img {
-            width: 36px;
+            width: auto;
             height: 36px;
             object-fit: contain;
         }
@@ -348,6 +348,59 @@
             }
         }
 
+        /* Hidden state */
+        .n8n-chat-widget .chat-toggle-wrapper.hidden {
+            pointer-events: none;
+            animation: toggle-exit 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .n8n-chat-widget .chat-toggle-wrapper.hidden .chat-toggle-card {
+            animation: card-exit 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .n8n-chat-widget .chat-toggle-wrapper.hidden .chat-toggle-circle {
+            animation: circle-exit 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Exit keyframes */
+        @keyframes toggle-exit {
+            to {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes card-exit {
+            to {
+                transform: translateX(80%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes circle-exit {
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Re-entry */
+        .n8n-chat-widget .chat-toggle-wrapper.show {
+            pointer-events: auto;
+            animation: toggle-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .n8n-chat-widget .chat-toggle-wrapper.show .chat-toggle-card {
+            animation: card-enter 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.05s;
+        }
+
+        .n8n-chat-widget .chat-toggle-wrapper.show .chat-toggle-circle {
+            animation: circle-enter 0.55s cubic-bezier(0.22, 1.2, 0.36, 1) forwards;
+            animation-delay: 0.18s;
+        }
+
+
         .n8n-chat-widget .chat-footer {
             padding: 8px;
             text-align: center;
@@ -367,75 +420,75 @@
             opacity: 1;
         }
 
-                /* Links in chat messages */
+        /* Links in chat messages */
         .n8n-chat-widget .chat-message a {
-        color: var(--chat--color-secondary, #4A90E2);
-        text-decoration: underline;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-        word-break: break-word;
+            color: var(--chat--color-secondary, #4A90E2);
+            text-decoration: underline;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            word-break: break-word;
         }
 
         .n8n-chat-widget .chat-message a:hover {
-        opacity: 0.8;
+            opacity: 0.8;
         }
 
         .n8n-chat-widget .chat-message a:focus {
-        outline: 2px solid var(--chat--color-secondary);
-        border-radius: 2px;
+            outline: 2px solid var(--chat--color-secondary);
+            border-radius: 2px;
         }
 
         /* Paragraphs */
-        .n8n-chat-widget .chat-message p {
-        margin: 8px 0;
-        line-height: 1.6;
+         .n8n-chat-widget .chat-message p {
+            margin: 8px 0;
+            line-height: 1.6;
         }
 
         .n8n-chat-widget .chat-message p:first-child {
-        margin-top: 0;
+            margin-top: 0;
         }
 
         .n8n-chat-widget .chat-message p:last-child {
-        margin-bottom: 0;
+            margin-bottom: 0;
         }
 
         /* Bold text */
-        .n8n-chat-widget .chat-message strong {
-        font-weight: 600;
-        color: var(--chat--color-font);
+            .n8n-chat-widget .chat-message strong {
+            font-weight: 600;
+            color: var(--chat--color-font);
         }
 
         /* Italic text */
-        .n8n-chat-widget .chat-message em {
-        font-style: italic;
-        color: var(--chat--color-font);
+            .n8n-chat-widget .chat-message em {
+            font-style: italic;
+            color: var(--chat--color-font);
         }
 
         /* Headers */
-        .n8n-chat-widget .chat-message h3,
-        .n8n-chat-widget .chat-message h4,
-        .n8n-chat-widget .chat-message h5 {
-        margin: 12px 0 8px 0;
-        font-weight: 600;
-        color: var(--chat--color-font);
+            .n8n-chat-widget .chat-message h3,
+            .n8n-chat-widget .chat-message h4,
+            .n8n-chat-widget .chat-message h5 {
+            margin: 12px 0 8px 0;
+            font-weight: 600;
+            color: var(--chat--color-font);
         }
 
         .n8n-chat-widget .chat-message h5 {
-        font-size: 16px;
+            font-size: 16px;
         }
 
         .n8n-chat-widget .chat-message h4 {
-        font-size: 15px;
+            font-size: 15px;
         }
 
         .n8n-chat-widget .chat-message h3 {
-        font-size: 14px;
+            font-size: 14px;
         }
 
         /* Line breaks */
-        .n8n-chat-widget .chat-message br {
-        display: block;
-        margin: 4px 0;
+            .n8n-chat-widget .chat-message br {
+            display: block;
+            margin: 4px 0;
         }
 
     `;
@@ -606,8 +659,8 @@ toggleWrapper.className = `chat-toggle-wrapper${config.style.position === 'left'
 
 toggleWrapper.innerHTML = `
   <div class="chat-toggle-card">
-    <img src="https://your-image-url.com/image.png" alt="Preview" />
-    <span>Chat with us</span>
+    <span>Just Ask</span>
+    <img src="https://cdn.prod.website-files.com/688b81ddcb0a244a2369a6ce/697cdbb9316b8051ae9e45d5_Pacepoint-logo-variations-14b.svg" alt="Pacepoint" />
   </div>
 
   <button class="chat-toggle-circle">
@@ -731,14 +784,20 @@ toggleWrapper.innerHTML = `
     });
     
     toggleWrapper.addEventListener('click', () => {
-        chatContainer.classList.toggle('open');
+        chatContainer.classList.add('open');
+        toggleWrapper.classList.add('hidden');
+        toggleWrapper.classList.remove('show');
     });
+
 
     // Add close button handlers
     const closeButtons = chatContainer.querySelectorAll('.close-button');
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             chatContainer.classList.remove('open');
+            toggleWrapper.classList.remove('hidden');
+            toggleWrapper.classList.add('show');
         });
     });
+
 })();
