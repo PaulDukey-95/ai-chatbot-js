@@ -284,7 +284,129 @@
         .n8n-chat-widget .chat-footer a:hover {
             opacity: 1;
         }
+
+                /* Links in chat messages */
+        .n8n-chat-widget .chat-message a {
+        color: var(--chat--color-secondary, #4A90E2);
+        text-decoration: underline;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+        word-break: break-word;
+        }
+
+        .n8n-chat-widget .chat-message a:hover {
+        opacity: 0.8;
+        }
+
+        .n8n-chat-widget .chat-message a:focus {
+        outline: 2px solid var(--chat--color-secondary);
+        border-radius: 2px;
+        }
+
+        /* Paragraphs */
+        .n8n-chat-widget .chat-message p {
+        margin: 8px 0;
+        line-height: 1.6;
+        }
+
+        .n8n-chat-widget .chat-message p:first-child {
+        margin-top: 0;
+        }
+
+        .n8n-chat-widget .chat-message p:last-child {
+        margin-bottom: 0;
+        }
+
+        /* Bold text */
+        .n8n-chat-widget .chat-message strong {
+        font-weight: 600;
+        color: var(--chat--color-font);
+        }
+
+        /* Italic text */
+        .n8n-chat-widget .chat-message em {
+        font-style: italic;
+        color: var(--chat--color-font);
+        }
+
+        /* Headers */
+        .n8n-chat-widget .chat-message h3,
+        .n8n-chat-widget .chat-message h4,
+        .n8n-chat-widget .chat-message h5 {
+        margin: 12px 0 8px 0;
+        font-weight: 600;
+        color: var(--chat--color-font);
+        }
+
+        .n8n-chat-widget .chat-message h5 {
+        font-size: 16px;
+        }
+
+        .n8n-chat-widget .chat-message h4 {
+        font-size: 15px;
+        }
+
+        .n8n-chat-widget .chat-message h3 {
+        font-size: 14px;
+        }
+
+        /* Line breaks */
+        .n8n-chat-widget .chat-message br {
+        display: block;
+        margin: 4px 0;
+        }
+
     `;
+   
+    // Message formatting function - handles paragraphs, links, bold, italic
+function parseAndFormatMessage(text) {
+  if (!text) return '';
+  
+  let html = text;
+  
+  // 1. Escape HTML special characters first (XSS protection)
+  html = html
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+  
+  // 2. Convert markdown bold: **text** → <strong>text</strong>
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // 3. Convert markdown italic: *text* → <em>text</em>
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  
+  // 4. Convert markdown links: [text](url) → <a href="url">text</a>
+  html = html.replace(/\[(.*?)\]\((https?:\/\/[^\)]+)\)/g, 
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  
+  // 5. Convert standalone URLs to clickable links
+  html = html.replace(/(https?:\/\/[^\s<]+)/g, 
+    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  
+  // 6. Convert markdown headers: # Title → <h5>Title</h5>
+  html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.*?)$/gm, '<h4>$1</h4>');
+  html = html.replace(/^# (.*?)$/gm, '<h5>$1</h5>');
+  
+  // 7. Convert line breaks to paragraphs (split on double line breaks)
+  const paragraphs = html.split('\n\n');
+  html = paragraphs
+    .filter(p => p.trim())
+    .map(p => {
+      // Handle line breaks within paragraphs
+      const lines = p.trim().split('\n');
+      return `<p>${lines.join('<br>')}</p>`;
+    })
+    .join('');
+  
+  return html;
+}
+
+
+
 
     // Load Geist font
     const fontLink = document.createElement('link');
@@ -445,9 +567,11 @@
 
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
+            const botText = Array.isArray(responseData) ? responseData.output : responseData.output;
+            botMessageDiv.innerHTML = parseAndFormatMessage(botText);  // ← FORMATTED
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
         } catch (error) {
             console.error('Error:', error);
         }
@@ -483,9 +607,11 @@
             
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(data) ? data[0].output : data.output;
+            const botText = Array.isArray(data) ? data.output : data.output;
+            botMessageDiv.innerHTML = parseAndFormatMessage(botText);  // ← FORMATTED
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
         } catch (error) {
             console.error('Error:', error);
         }
