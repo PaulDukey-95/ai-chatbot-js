@@ -39,7 +39,7 @@
         .n8n-chat-widget .brand-header {
             padding: 2rem 1rem;
             display: flex;
-            background: var(--chat--color-primary);
+            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             align-items: center;
             gap: 0.75rem;
             border-bottom: 1px solid #353535;
@@ -269,9 +269,9 @@
             justify-content: center;
             gap: 2px;
             padding-left: 20px;
-            font-size: 14px;
-            font-weight: 300;
-            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            color: #ffffff;
             cursor: pointer;
 
             transform: translateX(80%);
@@ -282,7 +282,7 @@
 
         .n8n-chat-widget .chat-toggle-card img {
             width: auto;
-            height: 36px;
+            height: 24px;
             object-fit: contain;
         }
 
@@ -300,7 +300,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 7px 18px rgba(0, 0, 0, 0.2);
             cursor: pointer;
 
             transform: translateX(100%);
@@ -660,7 +660,7 @@ toggleWrapper.className = `chat-toggle-wrapper${config.style.position === 'left'
 toggleWrapper.innerHTML = `
   <div class="chat-toggle-card">
     <span>Just Ask</span>
-    <img src="https://cdn.prod.website-files.com/688b81ddcb0a244a2369a6ce/697cdbb9316b8051ae9e45d5_Pacepoint-logo-variations-14b.svg" alt="Pacepoint" />
+    <img src="https://cdn.prod.website-files.com/688b81ddcb0a244a2369a6ce/697ce3a227270b5dbd8ec492_Pacepoint-logo-variations-14c.svg" alt="Pacepoint" />
   </div>
 
   <button class="chat-toggle-circle">
