@@ -494,51 +494,98 @@
     `;
    
     // Message formatting function - handles paragraphs, links, bold, italic
+
 function parseAndFormatMessage(text) {
   if (!text) return '';
-  
-  let html = text;
-  
-  // 1. Escape HTML special characters first (XSS protection)
-  html = html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-  
-  // 2. Convert markdown bold: **text** → <strong>text</strong>
+
+  // Escape HTML to prevent unsafe content
+  function escapeHTML(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // Only permit safe web URLs
+  function makeLink(url, label) {
+    try {
+      const parsed = new URL(url);
+
+      if (!['http:', 'https:'].includes(parsed.protocol)) {
+        return escapeHTML(label);
+      }
+
+      return `<a href="${escapeHTML(parsed.href)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
+    } catch {
+      return escapeHTML(label);
+    }
+  }
+
+  // Match HTML links, Markdown links and plain URLs
+  // in one pass to avoid creating nested links
+  const linkPattern = /<a\b([^>]*)>([\s\S]*?)<\/a\s*>|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<>"']+)/gi;
+
+  let html = '';
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(linkPattern)) {
+    html += escapeHTML(text.slice(lastIndex, match.index));
+
+    if (match[0].toLowerCase().startsWith('<a')) {
+      // Handle HTML links
+      const href = match[1].match(
+        /\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i
+      );
+
+      const label = match[2].replace(/<[^>]*>/g, '');
+
+      html += href
+        ? makeLink(href[1] ?? href[2] ?? href[3], label)
+        : escapeHTML(label);
+
+    } else if (match[4]) {
+      // Handle Markdown links
+      html += makeLink(match[4], match[3]);
+
+    } else {
+      // Handle standalone URLs
+      const url = match[5];
+      const cleanUrl = url.replace(/[.,!?;:]+$/, '');
+
+      html += makeLink(cleanUrl, cleanUrl);
+      html += escapeHTML(url.slice(cleanUrl.length));
+    }
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  html += escapeHTML(text.slice(lastIndex));
+
+  // Preserve Markdown bold and italic formatting
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  
-  // 3. Convert markdown italic: *text* → <em>text</em>
   html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-  
-  // 4. Convert markdown links: [text](url) → <a href="url">text</a>
-  html = html.replace(/\[(.*?)\]\((https?:\/\/[^\)]+)\)/g, 
-    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-  
-  // 5. Convert standalone URLs to clickable links
-  html = html.replace(/(https?:\/\/[^\s<]+)/g, 
-    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-  
-  // 6. Convert markdown headers: # Title → <h5>Title</h5>
+
+  // Preserve Markdown headers
   html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
   html = html.replace(/^## (.*?)$/gm, '<h4>$1</h4>');
   html = html.replace(/^# (.*?)$/gm, '<h5>$1</h5>');
-  
-  // 7. Convert line breaks to paragraphs (split on double line breaks)
+
+  // Preserve paragraph and line-break formatting
   const paragraphs = html.split('\n\n');
+
   html = paragraphs
     .filter(p => p.trim())
     .map(p => {
-      // Handle line breaks within paragraphs
       const lines = p.trim().split('\n');
       return `<p>${lines.join('<br>')}</p>`;
     })
     .join('');
-  
+
   return html;
 }
+
 
 
 
