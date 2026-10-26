@@ -491,6 +491,52 @@
             margin: 4px 0;
         }
 
+        
+        /* Pacepoint AI typing animation */
+        .n8n-chat-widget .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 14px 18px;
+            width: fit-content;
+        }
+        
+        .n8n-chat-widget .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: var(--chat--color-primary);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pacepointTyping 1.2s infinite ease-in-out;
+        }
+        
+        .n8n-chat-widget .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .n8n-chat-widget .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes pacepointTyping {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.35;
+            }
+            30% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .n8n-chat-widget .typing-indicator span {
+                animation: none;
+                opacity: 0.75;
+            }
+        }
+
+
     `;
    
     // Message formatting function - handles paragraphs, links, bold, italic
@@ -757,12 +803,16 @@ toggleWrapper.innerHTML = `
             chatContainer.querySelector('.new-conversation').style.display = 'none';
             chatInterface.classList.add('active');
 
-            const botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'chat-message bot';
-            const botText = Array.isArray(responseData) ? responseData.output : responseData.output;
-            botMessageDiv.innerHTML = parseAndFormatMessage(botText);  // ← FORMATTED
-            messagesContainer.appendChild(botMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            const botText = Array.isArray(responseData)
+                ? responseData[0]?.output
+                : responseData?.output;
+            
+            if (typeof botText === 'string' && botText.trim()) {
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'chat-message bot';
+                botMessageDiv.innerHTML = parseAndFormatMessage(botText);
+                messagesContainer.appendChild(botMessageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
         } catch (error) {
             console.error('Error:', error);
