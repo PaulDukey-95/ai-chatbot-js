@@ -819,42 +819,87 @@ toggleWrapper.innerHTML = `
         }
     }
 
-    async function sendMessage(message) {
-        const messageData = {
-            action: "sendMessage",
-            sessionId: currentSessionId,
-            route: config.webhook.route,
-            chatInput: message,
-            metadata: {
-                userId: ""
+    
+        async function sendMessage(message) {
+            const messageData = {
+                action: "sendMessage",
+                sessionId: currentSessionId,
+                route: config.webhook.route,
+                chatInput: message,
+                metadata: {
+                    userId: ""
+                }
+            };
+        
+            // Display user's message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'chat-message user';
+            userMessageDiv.textContent = message;
+            messagesContainer.appendChild(userMessageDiv);
+        
+            // Create the animated three-dot indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot typing-indicator';
+            typingDiv.setAttribute('role', 'status');
+            typingDiv.setAttribute('aria-label', 'Pacepoint AI is thinking');
+        
+            for (let i = 0; i < 3; i++) {
+                typingDiv.appendChild(document.createElement('span'));
             }
-        };
-
-        const userMessageDiv = document.createElement('div');
-        userMessageDiv.className = 'chat-message user';
-        userMessageDiv.textContent = message;
-        messagesContainer.appendChild(userMessageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        try {
-            const response = await fetch(config.webhook.url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(messageData)
-            });
-            
-            const data = await response.json();
-            
-            const botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'chat-message bot';
-            const botText = Array.isArray(data) ? data.output : data.output;
-            botMessageDiv.innerHTML = parseAndFormatMessage(botText);  // ← FORMATTED
-            messagesContainer.appendChild(botMessageDiv);
+        
+            messagesContainer.appendChild(typingDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        } catch (error) {
+        
+            try {
+                const response = await fetch(config.webhook.url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(messageData)
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`Webhook returned HTTP ${response.status}`);
+                }
+        
+                const data = await response.json();
+        
+                const result = Array.isArray(data) ? data[0] : data;
+                const botText = result?.output ?? result?.text ?? result?.message;
+        
+                // Remove animation when response arrives
+                typingDiv.remove();
+        
+                if (typeof botText !== 'string' || !botText.trim()) {
+                    throw new Error('Empty chatbot response');
+                }
+        
+                // Display the bot's answer
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'chat-message bot';
+                botMessageDiv.innerHTML = parseAndFormatMessage(botText);
+        
+                messagesContainer.appendChild(botMessageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+            } catch (error) {
+                console.error('Pacepoint Chatbot Error:', error);
+        
+                // Remove animation on error
+                typingDiv.remove();
+        
+                // Display a friendly error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'chat-message bot';
+                errorDiv.textContent =
+                    'Sorry, I could not process your request. Please try again.';
+        
+                messagesContainer.appendChild(errorDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+ catch (error) {
             console.error('Error:', error);
         }
     }
