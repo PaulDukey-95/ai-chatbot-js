@@ -757,15 +757,10 @@ toggleWrapper.innerHTML = `
             chatContainer.querySelector('.new-conversation').style.display = 'none';
             chatInterface.classList.add('active');
 
-            const botText = Array.isArray(responseData)
-            ? responseData[0]?.output
-            : responseData?.output;
-        
-        // Only create the bubble if there is a real message
-        if (typeof botText === 'string' && botText.trim() !== '') {
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.innerHTML = parseAndFormatMessage(botText);
+            const botText = Array.isArray(responseData) ? responseData.output : responseData.output;
+            botMessageDiv.innerHTML = parseAndFormatMessage(botText);  // ← FORMATTED
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
